@@ -1,9 +1,7 @@
 package com.exadel.EmailSender.service;
 
 import com.exadel.EmailSender.dto.UserDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,30 +10,32 @@ import java.util.concurrent.Executors;
 
 @Service
 public class EmailSender {
-    @Autowired
-    private EmailCRUD emailCRUD;
 
-    @Autowired
-    private UserService userService;
+    private final EmailCRUD emailCRUD;
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+    private final UserService userService;
 
-    public EmailSender() {
+    private final JavaMailSender javaMailSender;
+
+    public EmailSender(EmailCRUD emailCRUD, UserService userService, JavaMailSender javaMailSender) {
+        this.emailCRUD = emailCRUD;
+        this.userService = userService;
+        this.javaMailSender = javaMailSender;
     }
 
-    public void sendEmailAllUsers() {
+
+    public void sendEmailToAllUsers(String subject, String text) {
         List<UserDto> users = userService.getAllUsers();
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         executorService.submit(() -> {
             for (UserDto user : users) {
-                javaMailSender.send(emailCRUD.makeEmail(user.getEmail(), "Hello", "Hello"));
+                javaMailSender.send(emailCRUD.makeEmail(user.getEmail(), subject, text));
             }
         });
     }
 
-    public static void main(String[] args) {
-        EmailSender emailSender = new EmailSender();
-        emailSender.sendEmailAllUsers();
+    public void sendEmailToUser(Long id, String subject, String text) {
+        UserDto user = userService.getUser(id);
+        javaMailSender.send(emailCRUD.makeEmail(user.getEmail(), subject, text));
     }
 }
