@@ -1,15 +1,15 @@
 package com.exadel.EmailSender.service;
 
 import com.exadel.EmailSender.dto.UserDto;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.exadel.EmailSender.utils.HotelMainUtils.*;
+import static com.exadel.EmailSender.utils.HotelMainUtils.GET_ALL_USERS;
+import static com.exadel.EmailSender.utils.HotelMainUtils.GET_USER_BY_ID;
 
 @Service
 public class UserService {
