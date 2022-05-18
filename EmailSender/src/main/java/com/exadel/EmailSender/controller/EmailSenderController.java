@@ -1,6 +1,6 @@
 package com.exadel.EmailSender.controller;
 
-import com.exadel.EmailSender.dto.EmailDto;
+import  com.exadel.EmailSender.dto.EmailDto;
 import com.exadel.EmailSender.service.EmailSender;
 import org.springframework.web.bind.annotation.*;
 
