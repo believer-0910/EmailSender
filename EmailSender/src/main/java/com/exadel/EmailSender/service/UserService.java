@@ -1,7 +1,8 @@
 package com.exadel.EmailSender.service;
 
 import com.exadel.EmailSender.dto.UserDto;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -14,11 +15,10 @@ import static com.exadel.EmailSender.utils.HotelMainUtils.GET_USER_BY_ID;
 @Service
 public class UserService {
 
-    private final Logger log;
+    private static final Logger log = LogManager.getLogger(UserService.class);
     private final WebClient.Builder webClientBuilder;
 
-    public UserService(Logger log, WebClient.Builder webClientBuilder) {
-        this.log = log;
+    public UserService(WebClient.Builder webClientBuilder) {
         this.webClientBuilder = webClientBuilder;
     }
 
