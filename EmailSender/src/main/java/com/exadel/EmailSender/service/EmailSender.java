@@ -13,13 +13,13 @@ import java.util.concurrent.Executors;
 
 @Service
 public class EmailSender {
-    private final EmailCRUD emailCRUD;
+    private final EmailService emailService;
     private final UserService userService;
     private final JavaMailSender javaMailSender;
     private static final Logger log = LogManager.getLogger(EmailSender.class);
 
-    public EmailSender(EmailCRUD emailCRUD, UserService userService, JavaMailSender javaMailSender) {
-        this.emailCRUD = emailCRUD;
+    public EmailSender(EmailService emailService, UserService userService, JavaMailSender javaMailSender) {
+        this.emailService = emailService;
         this.userService = userService;
         this.javaMailSender = javaMailSender;
     }
@@ -30,8 +30,8 @@ public class EmailSender {
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         executorService.submit(() -> {
             for (UserDto user : users) {
-                javaMailSender.send(emailCRUD.makeEmail(user.getEmail(), emailDto.getSubject(), emailDto.getText()));
-                emailCRUD.saveEmail(emailDto);
+                javaMailSender.send(emailService.makeEmail(user.getEmail(), emailDto.getSubject(), emailDto.getText()));
+                emailService.saveEmail(emailDto);
             }
         });
     }
@@ -39,7 +39,7 @@ public class EmailSender {
     public void sendEmailToUser(EmailDto emailDto) {
         log.info("Send to the user with id: " + emailDto.getUserId());
         UserDto user = userService.getUser(emailDto.getUserId());
-        javaMailSender.send(emailCRUD.makeEmail(user.getEmail(), emailDto.getSubject(), emailDto.getText()));
-        emailCRUD.saveEmail(emailDto);
+        javaMailSender.send(emailService.makeEmail(user.getEmail(), emailDto.getSubject(), emailDto.getText()));
+        emailService.saveEmail(emailDto);
     }
 }

@@ -1,7 +1,7 @@
 package com.exadel.EmailSender.controller;
 
 import com.exadel.EmailSender.dto.EmailDto;
-import com.exadel.EmailSender.service.EmailCRUD;
+import com.exadel.EmailSender.service.EmailService;
 import com.exadel.EmailSender.service.EmailSender;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,12 +15,12 @@ import java.util.List;
 public class EmailSenderController {
 
     private final EmailSender emailSender;
-    private final EmailCRUD emailCRUD;
+    private final EmailService emailService;
     private final static Logger log = LogManager.getLogger(EmailSenderController.class);
 
-    public EmailSenderController(EmailSender emailSender, EmailCRUD emailCRUD) {
+    public EmailSenderController(EmailSender emailSender, EmailService emailService) {
         this.emailSender = emailSender;
-        this.emailCRUD = emailCRUD;
+        this.emailService = emailService;
     }
 
     @PostMapping("/toAllUsers")
@@ -38,24 +38,24 @@ public class EmailSenderController {
     @GetMapping("/getAll")
     public ResponseEntity<List<EmailDto>> getAll() {
         log.info("get all emails");
-        return ResponseEntity.ok(emailCRUD.getAllEmails());
+        return ResponseEntity.ok(emailService.getAllEmails());
     }
 
     @GetMapping("/get/{id}")
     public ResponseEntity<EmailDto> get(@PathVariable("id") Long id) {
         log.info("get email by id: " + id);
-        return ResponseEntity.ok(emailCRUD.getEmail(id));
+        return ResponseEntity.ok(emailService.getEmail(id));
     }
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable("id") Long id) {
         log.info("delete email by id: " + id);
-        emailCRUD.deleteEmail(id);
+        emailService.deleteEmail(id);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<EmailDto> update(@PathVariable("id") Long id, @RequestBody EmailDto emailDto) {
         log.info("update email: " + emailDto);
-        return ResponseEntity.ok(emailCRUD.updateEmail(id, emailDto));
+        return ResponseEntity.ok(emailService.updateEmail(id, emailDto));
     }
 }
