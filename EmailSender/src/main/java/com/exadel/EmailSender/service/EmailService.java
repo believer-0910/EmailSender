@@ -37,8 +37,7 @@ public class EmailService {
 
     public void saveEmail(EmailDto emailDto) {
         log.info("Email saved");
-        EmailEntity emailEntity = new EmailEntity(emailDto.getUserId(), emailDto.getSubject(), emailDto.getText());
-        emailRepository.save(emailEntity);
+        emailRepository.save(mapEmailDtoToEmailEntity(new EmailEntity(), emailDto));
     }
 
     public void deleteEmail(Long id) {
@@ -48,16 +47,13 @@ public class EmailService {
 
     public EmailDto getEmail(Long id) {
         log.info("Email get");
-        EmailEntity emailEntity = emailRepository.getById(id);
-        return new EmailDto(emailEntity.getUserId(), emailEntity.getSubject(), emailEntity.getText());
+        return mapEmailEntityToEmailDto(emailRepository.getById(id));
     }
 
     public List<EmailDto> getAllEmails() {
         log.info("All emails get");
         return emailRepository.findAll().stream()
-                .map(emailEntity -> new EmailDto(
-                        emailEntity.getUserId(), emailEntity.getSubject(), emailEntity.getText()
-                )).collect(java.util.stream.Collectors.toList());
+                .map(this::mapEmailEntityToEmailDto).collect(java.util.stream.Collectors.toList());
     }
 
     public EmailDto updateEmail(Long id, EmailDto emailDto) {
@@ -65,13 +61,21 @@ public class EmailService {
         Optional<EmailEntity> emailEntity = emailRepository.findById(id);
         if (emailEntity.isPresent()) {
             EmailEntity email = emailEntity.get();
-            email.setUserId(emailDto.getUserId());
-            email.setSubject(emailDto.getSubject());
-            email.setText(emailDto.getText());
-            EmailEntity savedEmail = emailRepository.save(email);
-            return new EmailDto(savedEmail.getUserId(), savedEmail.getSubject(), savedEmail.getText());
+            EmailEntity savedEmail = emailRepository.save(mapEmailDtoToEmailEntity(email, emailDto));
+            return mapEmailEntityToEmailDto(savedEmail);
         }
         return null;
+    }
+
+    private EmailEntity mapEmailDtoToEmailEntity(EmailEntity emailEntity, EmailDto emailDto) {
+        emailEntity.setUserId(emailDto.getUserId());
+        emailEntity.setSubject(emailDto.getSubject());
+        emailEntity.setText(emailDto.getText());
+        return emailEntity;
+    }
+
+    private EmailDto mapEmailEntityToEmailDto(EmailEntity emailEntity) {
+        return new EmailDto(emailEntity.getUserId(), emailEntity.getSubject(), emailEntity.getText());
     }
 
 }
