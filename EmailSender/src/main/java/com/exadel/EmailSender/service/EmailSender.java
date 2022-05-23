@@ -1,9 +1,9 @@
 package com.exadel.EmailSender.service;
 
+import com.exadel.EmailSender.dto.EmailDto;
 import com.exadel.EmailSender.dto.UserDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.internal.LogManagerStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -24,20 +24,22 @@ public class EmailSender {
         this.javaMailSender = javaMailSender;
     }
 
-    public void sendEmailToAllUsers(String subject, String text) {
+    public void sendEmailToAllUsers(EmailDto emailDto) {
         log.info("Send mail all users");
         List<UserDto> users = userService.getAllUsers();
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         executorService.submit(() -> {
             for (UserDto user : users) {
-                javaMailSender.send(emailCRUD.makeEmail(user.getEmail(), subject, text));
+                javaMailSender.send(emailCRUD.makeEmail(user.getEmail(), emailDto.getSubject(), emailDto.getText()));
+                emailCRUD.saveEmail(emailDto);
             }
         });
     }
 
-    public void sendEmailToUser(Long id, String subject, String text) {
-        log.info("Send to the user with id: " + id);
-        UserDto user = userService.getUser(id);
-        javaMailSender.send(emailCRUD.makeEmail(user.getEmail(), subject, text));
+    public void sendEmailToUser(EmailDto emailDto) {
+        log.info("Send to the user with id: " + emailDto.getUserId());
+        UserDto user = userService.getUser(emailDto.getUserId());
+        javaMailSender.send(emailCRUD.makeEmail(user.getEmail(), emailDto.getSubject(), emailDto.getText()));
+        emailCRUD.saveEmail(emailDto);
     }
 }
