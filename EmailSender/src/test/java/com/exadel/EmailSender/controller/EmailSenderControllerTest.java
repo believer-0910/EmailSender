@@ -29,7 +29,7 @@ class EmailSenderControllerTest {
 
     @Test
     void testSendEmailToAllUsers() throws Exception {
-        doNothing().when(this.emailSender).sendEmailToAllUsers((String) any(), (String) any());
+        doNothing().when(this.emailSender).sendEmailToAllUsers((EmailDto) any());
 
         EmailDto emailDto = new EmailDto();
         emailDto.setSubject("Hello from the Dreaming Spires");
@@ -47,7 +47,7 @@ class EmailSenderControllerTest {
 
     @Test
     void testSendEmailToUser() throws Exception {
-        doNothing().when(this.emailSender).sendEmailToUser((Long) any(), (String) any(), (String) any());
+        doNothing().when(this.emailSender).sendEmailToUser((EmailDto) any());
 
         EmailDto emailDto = new EmailDto();
         emailDto.setSubject("Hello from the Dreaming Spires");
