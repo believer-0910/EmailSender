@@ -4,6 +4,7 @@ import com.exadel.EmailSender.dto.EmailDto;
 import com.exadel.EmailSender.dto.UserDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class EmailSender {
         this.javaMailSender = javaMailSender;
     }
 
+    @CacheEvict(value = "sendEmailToAllUsers", allEntries = true)
     public void sendEmailToAllUsers(EmailDto emailDto) {
         log.info("Send mail all users");
         List<UserDto> users = userService.getAllUsers();
@@ -36,6 +38,7 @@ public class EmailSender {
         });
     }
 
+    @CacheEvict(value = "sendEmailToUser", allEntries = true)
     public void sendEmailToUser(EmailDto emailDto) {
         log.info("Send to the user with id: " + emailDto.getUserId());
         UserDto user = userService.getUser(emailDto.getUserId());
