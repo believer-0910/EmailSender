@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public List<UserDto> getAllUsers() {
-        List<UserDto> userDtoList = userDtoList = webClientBuilder.build()
+        List<UserDto> userDtoList = webClientBuilder.build()
                     .get()
                     .uri(GET_ALL_USERS)
                     .retrieve()
@@ -44,9 +44,7 @@ public class UserService {
                     .uri(GET_USER_BY_ID + id)
                     .retrieve()
                     .bodyToMono(UserDto.class)
-                    .doOnError(e -> {
-                        log.error("User not found");
-                    })
+                    .doOnError(e -> log.error("User not found"))
                     .block();
         if  (Objects.equals(userDto, new UserDto())) {
             throw new RuntimeException("User with id " + id + " not found");
