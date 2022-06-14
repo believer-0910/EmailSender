@@ -17,7 +17,7 @@ public class EmailService {
 
     @Value("${spring.mail.username}")
     private String fromEmail;
-    private final static Logger log = LogManager.getLogger(EmailService.class);
+    private static final Logger log = LogManager.getLogger(EmailService.class);
 
     private final EmailRepository emailRepository;
 
