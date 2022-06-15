@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  emailsender:
+    image: 'emailsender:latest'
+    build:
+      context: .
+    container_name: emailsender
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/compose-postgres
+      - SPRING_DATASOURCE_USERNAME=compose-postgres
+      - SPRING_DATASOURCE_PASSWORD=compose-postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: email-db
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_USER=compose-postgres
+      - POSTGRES_PASSWORD=compose-postgres
+    volumes:
+      - ./var/lib/docker/volumes/email-sender-volume/_data
