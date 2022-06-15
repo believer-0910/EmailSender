@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS email_entity(
+    id bigserial,
+    user_id int NOT NULL,
+    subject varchar(50) NOT NULL,
+    text varchar(512) NOT NULL,
+    PRIMARY KEY (id)
+);
