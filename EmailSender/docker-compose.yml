@@ -1,4 +1,7 @@
-version: '3.8'
+version: '3.3'
+
+volumes:
+  var:
 
 services:
   emailsender:
@@ -25,4 +28,4 @@ services:
       - POSTGRES_USER=compose-postgres
       - POSTGRES_PASSWORD=compose-postgres
     volumes:
-      - ./var/lib/docker/volumes/email-sender-volume/_data
+      - var/lib/docker/volumes/email-sender-volume/_data
