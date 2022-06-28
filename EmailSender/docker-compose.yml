@@ -1,7 +1,7 @@
 version: '3.3'
 
 volumes:
-  var:
+  pgdata:
 
 services:
   emailsender:
@@ -28,4 +28,20 @@ services:
       - POSTGRES_USER=compose-postgres
       - POSTGRES_PASSWORD=compose-postgres
     volumes:
-      - var/lib/docker/volumes/email-sender-volume/_data
+      - pgdata:/var/lib/docker/volumes/email-sender-volume/_data
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq_email_sender'
+    ports:
+      - 5673:5673
+      - 15673:15673
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - rabbitmq_go_net
+
+networks:
+  rabbitmq_go_net:
+    driver: bridge
