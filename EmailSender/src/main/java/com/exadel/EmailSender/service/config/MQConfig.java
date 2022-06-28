@@ -16,17 +16,17 @@ public class MQConfig {
     public static final String ROUTING_KEY = "rabbitmq_message_routing_key";
 
     @Bean
-    public Queue queue(){
+    public Queue queue() {
         return new Queue(QUEUE);
     }
 
     @Bean
-    public TopicExchange exchange(){
+    public TopicExchange exchange() {
         return new TopicExchange(EXCHANGE);
     }
 
     @Bean
-    public Binding binding(Queue queue, TopicExchange exchange){
+    public Binding binding(Queue queue, TopicExchange exchange) {
         return BindingBuilder
                 .bind(queue)
                 .to(exchange)
@@ -34,12 +34,12 @@ public class MQConfig {
     }
 
     @Bean
-    public MessageConverter messageConverter(){
+    public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
 
     @Bean
-    public RabbitTemplate template(ConnectionFactory connectionFactory){
+    public RabbitTemplate template(ConnectionFactory connectionFactory) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
         template.setMessageConverter(messageConverter());
         return template;

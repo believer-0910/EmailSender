@@ -17,9 +17,9 @@ public class MessageListener {
     }
 
     @RabbitListener(queues = MQConfig.QUEUE)
-    public void listener(MessageFromRabbitMQ messageFromRabbitMQ){
+    public void listener(MessageFromRabbitMQ messageFromRabbitMQ) {
         EmailDto emailDto = messageFromRabbitMQ.getEmailDto();
-        if(messageFromRabbitMQ.getToUser()){
+        if (messageFromRabbitMQ.getToUser()) {
             emailSender.sendEmailToUser(emailDto);
         } else {
             emailSender.sendEmailToAllUsers(emailDto);
