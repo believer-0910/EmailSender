@@ -1,8 +1,8 @@
 # Email Sender
 
 # What this project is about
-This project is about sending emails to users. You can send emails to all users or to specific users.
-And this project save the emails in the database and log the emails inorder to save time and errors.
+    This project is about sending emails to users. You can send emails to all users or to specific users.
+    And this project save the emails in the database and log the emails inorder to save time and errors.
 # Database
     || Email ||
 
@@ -24,14 +24,19 @@ And this project save the emails in the database and log the emails inorder to s
     WebClient used instead of RestTemplate to make the project more fast and easy to use
 
 # Swagger
-Here [Swagger](http://localhost:8081/swagger-ui.html) you can see all API endpoints.
-And you can use all endpoints in your browser. Before you can use it you need to run the project. To do this you need reed the next chapter.
+    Here [Swagger](http://localhost:8081/swagger-ui.html) you can see all API endpoints.
+    And you can use all endpoints in your browser. Before you can use it you need to run the project. 
+    To do this you need reed the next chapter.
 
 
 
 # How to run ?
-[]: # Firstly you should run the docker-compose.yml file with
-'docker-compose up' command writing it to the Terminal and
-visit [Swagger](http://localhost:8080/swagger-ui.html)
-Here you can see all APIs in the project.
-Or you should upload the project any IDE and run it.
+    []: # Firstly you should run the docker-compose.yml file with
+    'docker-compose up' command writing it to the Terminal and
+    visit [Swagger](http://localhost:8080/swagger-ui.html)
+    Here you can see all APIs in the project.
+    Or you should upload the project any IDE and run it.
+
+# RabbitMQ
+    RabbitMQ is message brocker. On this project RabbitMQ helps recieving requests from Main service(Hotel Service).
+    In order to run RabbitMQ you only run the docker-compose.yml file. If you don't know about it, go to How to run session.

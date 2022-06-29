@@ -28,10 +28,14 @@ dependencies {
 	implementation 'org.apache.logging.log4j:log4j-api:2.17.2'
 	implementation 'org.apache.logging.log4j:log4j-core:2.17.2'
 	implementation group: 'org.flywaydb', name: 'flyway-maven-plugin', version: '8.5.12'
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'
 
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
+	testImplementation 'org.springframework.amqp:spring-rabbit-test'
+
+	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
 }
 
 tasks.named('test') {
