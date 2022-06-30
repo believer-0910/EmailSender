@@ -1,7 +1,7 @@
 package com.exadel.EmailSender.service;
 
 import com.exadel.EmailSender.dto.UserDto;
-import com.exadel.EmailSender.properties.GlobalUrlProperties;
+import com.exadel.EmailSender.properties.HotelServiceProperties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -14,18 +14,17 @@ public class UserService {
 
     private static final Logger log = LogManager.getLogger(UserService.class);
     private final WebClient.Builder webClientBuilder;
-    private final GlobalUrlProperties globalUrlProperties;
+    private final HotelServiceProperties hotelServiceProperties;
 
-    public UserService(WebClient.Builder webClientBuilder, GlobalUrlProperties globalUrlProperties) {
+    public UserService(WebClient.Builder webClientBuilder, HotelServiceProperties hotelServiceProperties) {
         this.webClientBuilder = webClientBuilder;
-        this.globalUrlProperties = globalUrlProperties;
+        this.hotelServiceProperties = hotelServiceProperties;
     }
 
     public List<UserDto> getAllUsers() {
-        String get_all_users = globalUrlProperties.getGet_all_users();
         List<UserDto> userDtoList = webClientBuilder.build()
                 .get()
-                .uri(get_all_users)
+                .uri(hotelServiceProperties.getGetAllUsers())
                 .retrieve()
                 .bodyToFlux(UserDto.class)
                 .doOnError(e -> log.error("Error while getting all users", e))
@@ -39,10 +38,9 @@ public class UserService {
     }
 
     public UserDto getUser(Long id) {
-        String get_user_by_id = globalUrlProperties.getGet_user_by_id();
         UserDto userDto = webClientBuilder.build()
                 .get()
-                .uri(get_user_by_id + id)
+                .uri(hotelServiceProperties.getGetUserById() + id)
                 .retrieve()
                 .bodyToMono(UserDto.class)
                 .doOnError(e -> log.error("User not found"))
