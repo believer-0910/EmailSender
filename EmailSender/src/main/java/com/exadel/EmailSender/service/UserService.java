@@ -24,7 +24,7 @@ public class UserService {
     public List<UserDto> getAllUsers() {
         List<UserDto> userDtoList = webClientBuilder.build()
                 .get()
-                .uri(hotelServiceProperties.getGetAllUsers())
+                .uri(hotelServiceProperties.getUrl() + "user/getAll")
                 .retrieve()
                 .bodyToFlux(UserDto.class)
                 .doOnError(e -> log.error("Error while getting all users", e))
@@ -40,7 +40,7 @@ public class UserService {
     public UserDto getUser(Long id) {
         UserDto userDto = webClientBuilder.build()
                 .get()
-                .uri(hotelServiceProperties.getGetUserById() + id)
+                .uri(hotelServiceProperties.getUrl() + "user/get/" + id)
                 .retrieve()
                 .bodyToMono(UserDto.class)
                 .doOnError(e -> log.error("User not found"))

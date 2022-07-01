@@ -6,25 +6,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @PropertySource("classpath:hotelServiceURLs.properties")
-@ConfigurationProperties("url")
+@ConfigurationProperties("hotel-service")
 public class HotelServiceProperties {
 
-    private String getUserById;
-    private String getAllUsers;
+    private String url;
 
-    public String getGetUserById() {
-        return getUserById;
+    public String getUrl() {
+        return url;
     }
 
-    public void setGetUserById(String getUserById) {
-        this.getUserById = getUserById;
-    }
-
-    public String getGetAllUsers() {
-        return getAllUsers;
-    }
-
-    public void setGetAllUsers(String getAllUsers) {
-        this.getAllUsers = getAllUsers;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
