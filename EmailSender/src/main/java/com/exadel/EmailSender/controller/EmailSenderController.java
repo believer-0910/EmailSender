@@ -16,7 +16,7 @@ public class EmailSenderController {
 
     private final EmailSender emailSender;
     private final EmailService emailService;
-    private final static Logger log = LogManager.getLogger(EmailSenderController.class);
+    private static final Logger log = LogManager.getLogger(EmailSenderController.class);
 
     public EmailSenderController(EmailSender emailSender, EmailService emailService) {
         this.emailSender = emailSender;
