@@ -29,6 +29,8 @@ dependencies {
 	implementation 'org.apache.logging.log4j:log4j-core:2.17.2'
 	implementation group: 'org.flywaydb', name: 'flyway-maven-plugin', version: '8.5.12'
 	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.7.1'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.7.1'
 
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

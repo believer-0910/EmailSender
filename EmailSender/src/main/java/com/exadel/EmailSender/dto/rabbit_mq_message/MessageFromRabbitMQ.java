@@ -1,5 +1,4 @@
-package com.exadel.EmailSender.dto.rabbitMqMessage;
-
+package com.exadel.EmailSender.dto.rabbit_mq_message;
 
 import com.exadel.EmailSender.dto.EmailDto;
 import lombok.ToString;
