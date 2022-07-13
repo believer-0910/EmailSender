@@ -1,7 +1,7 @@
 package com.exadel.EmailSender.listener;
 
 import com.exadel.EmailSender.dto.EmailDto;
-import com.exadel.EmailSender.dto.rabbitMqMessage.MessageFromRabbitMQ;
+import com.exadel.EmailSender.dto.rabbit_mq_message.MessageFromRabbitMQ;
 import com.exadel.EmailSender.service.EmailSender;
 import com.exadel.EmailSender.service.config.MQConfig;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
